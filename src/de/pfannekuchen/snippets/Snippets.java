@@ -63,7 +63,7 @@ public class Snippets {
 		try {
 			BootStrapResources.extractResources();
 		} catch (IOException e) {
-			System.out.println("Cannot extract bootstrap resources.");
+			System.out.println("Cannot extract bootstrap resources. Probably already existing!");
 		}
 		
 		/* Initializing global hooks */
@@ -82,9 +82,9 @@ public class Snippets {
 						isFDone = true; // When F key is pressed, set boolean to true
 						break;
 				}
-				if (isWindowsDone && isFDone) {
+				if (isWindowsDone && isFDone) { // Show GUI, when both Keys are pressed
 					showGui();
-					isWindowsDone = false;
+					isWindowsDone = false; // Avoid a lot of windows..
 					isFDone = false;
 				}
 				return true;
@@ -108,10 +108,9 @@ public class Snippets {
 	}
 	
 	private static volatile boolean isHoveringOverX = false;
+	private static final int indexHeight = 25;
 	
 	private static void showGui() {
-		
-		
 		JFrame jframe = new JFrame() {
 			private static final long serialVersionUID = 1L;
 			
@@ -137,6 +136,23 @@ public class Snippets {
 				g.setFont(bahnschriftFont.deriveFont(attributes));
 				g.setColor(new Color(1f, 1f, 1f, 1f));
 				g.drawString("Code Snippets", 10, 16); // Draw Title
+				
+				Snippet snip = new Snippet("long boy", "a very long string");
+				g.setColor(new Color(0.5f, 0.5f, 0.5f, .25f)); 
+				g.fillRect(0, 25, 600, 25 + indexHeight);
+				g.setColor(new Color(1f, 1f, 1f, 1f)); 
+				
+				g.setFont(new Font("Bahnschrift", Font.PLAIN, 14));
+				g.drawString(snip.type, getWidth() - g.getFontMetrics().stringWidth(snip.type) - 4, 71);
+				
+				g.setFont(new Font("Bahnschrift", Font.BOLD, 20));
+				g.drawString(snip.title, 5, 55);
+				
+				/*int y = 25;
+				for (File snip : snippets) {
+					
+					y += indexHeight;
+				}*/
 			}
 		}; // Create new Canvas
 		jframe.setUndecorated(true); // Remove Title Bar
