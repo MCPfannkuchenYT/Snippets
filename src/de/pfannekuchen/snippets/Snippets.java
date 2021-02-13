@@ -5,6 +5,8 @@ import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.MouseInfo;
 import java.awt.RenderingHints;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
@@ -28,8 +30,8 @@ import sun.java2d.SunGraphics2D;
 
 public class Snippets {
 
-	private static final File snippetsDir = new File(System.getenv("AppData") + File.separator + "snippets");
-	private static File[] snippets;
+	private static final File snippetsDir = new File(System.getenv("AppData") + File.separator + "snippets"); // Snippets Directory
+	private static File[] snippets; // Snippets
 	
 	private static boolean isWindowsDone = false;
 	private static boolean isFDone = false;
@@ -41,6 +43,8 @@ public class Snippets {
 	public static void main(String[] args) {
 		loadFiles(); // Load the Snippets
 		loadHotkeys(); // Load the Global Hotkeys
+		
+		
 		
 		while (true) {
 			// Fall into endless Loop
@@ -137,7 +141,7 @@ public class Snippets {
 				g.setColor(new Color(1f, 1f, 1f, 1f));
 				g.drawString("Code Snippets", 10, 16); // Draw Title
 				
-				Snippet snip = new Snippet("long boy", "a very long string");
+				Snip snip = new Snip("long boy", "a very long string");
 				g.setColor(new Color(0.5f, 0.5f, 0.5f, .25f)); 
 				g.fillRect(0, 25, 600, 25 + indexHeight);
 				g.setColor(new Color(1f, 1f, 1f, 1f)); 
@@ -156,6 +160,25 @@ public class Snippets {
 			}
 		}; // Create new Canvas
 		jframe.setUndecorated(true); // Remove Title Bar
+		jframe.addKeyListener(new KeyListener() {
+			
+			@Override
+			public void keyTyped(KeyEvent e) {
+				if (e.getID() == 400) { // When ESC pressed
+					jframe.dispose(); // Remove
+				}
+			}
+			
+			@Override
+			public void keyReleased(KeyEvent e) {
+				
+			}
+			
+			@Override
+			public void keyPressed(KeyEvent e) {
+				
+			}
+		}); // Add ESC Listener
 		jframe.addMouseMotionListener(new MouseMotionListener() {
 			
 			@Override
